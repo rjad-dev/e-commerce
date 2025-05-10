@@ -2,6 +2,7 @@ import express from "express";
 import { createServer } from "http";
 import morgan from "morgan";
 import { baseUrl, Database, port } from "./config";
+import { ProxyRouter } from "./api/routes";
 
 class Server {
   private app: express.Application;
@@ -16,6 +17,7 @@ class Server {
   private configuration() {
     this.app.use(express.json());
     this.app.use(morgan("dev"));
+    this.app.use("/ecommerce/api/", ProxyRouter.map());
   }
 
   private async connect() {
@@ -34,5 +36,5 @@ class Server {
   }
 }
 
-const server = new Server()
-server.start()
+const server = new Server();
+server.start();
