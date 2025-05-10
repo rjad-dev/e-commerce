@@ -1,1 +1,2 @@
-export * from './exceptionalHandler'
+export * from "./exceptionalHandler";
+export * from "./authenticate";

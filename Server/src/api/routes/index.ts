@@ -1,6 +1,8 @@
 import { Router } from "express";
 import { IrouteInteface } from "../../interfaces";
 import { ProductsRoute } from "./productsRoute";
+import { UsersRoute } from "./usersRoute";
+import { CartssRoute } from "./cartsRoute";
 
 class ProxyRouter {
   private static instance: ProxyRouter;
@@ -10,6 +12,14 @@ class ProxyRouter {
     {
       segment: "/products",
       provider: ProductsRoute,
+    },
+    {
+      segment: "/users",
+      provider: UsersRoute,
+    },
+    {
+      segment: "/carts",
+      provider: CartssRoute,
     },
   ];
 

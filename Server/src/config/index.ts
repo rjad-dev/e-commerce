@@ -33,8 +33,9 @@ export const port = mustExist(+process.env.PORT! as number, "PORT"),
     port: number;
   },
 
-  pgMinLimit = 10,
-  pgMaxLimit = 1000,
+  jwtClientId = mustExist(process.env.JWT_CLIENT_ID!, "JWT_CLENT_ID"),
+  jwtClientSecret =  mustExist(process.env.JWT_CLIENT_SECRET!, "JWT_CLIENT_SECRET"),
+  accessTokenExpiresIn = '7d',
   /** Order */
   defaultOrder = "id",
   defaultSort = SortEnum.DESC
