@@ -4,6 +4,7 @@ import * as Sequelize from "sequelize";
 import User from "./users";
 import { OrderStatusEnum } from "../enums";
 import { OrderModelInterface } from "../interfaces";
+import OrderItem from "./orderItems";
 
 const sequelize = Database.sequelize;
 
@@ -71,9 +72,9 @@ const Order = sequelize.define<OrderModelInterface>(
   }
 );
 
-Order.belongsTo(User, {
-  foreignKey: "userId",
-  as: "user",
-});
+Order.hasMany(OrderItem, {
+  foreignKey: 'orderId',
+  as: 'orderItems'
+})
 
 export default Order;

@@ -1,0 +1,15 @@
+meta {
+  name: Checkout Order
+  type: http
+  seq: 9
+}
+
+patch {
+  url: http://localhost:8000/ecommerce/api/orders/1/checkout
+  body: none
+  auth: inherit
+}
+
+headers {
+  authorization: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJqb2huZG9lQGVtYWlsLmNvbSIsImlhdCI6MTc0Njg5NDIzNSwiZXhwIjoxNzQ3NDk5MDM1fQ.XHpD7HFljW1bu_aT7INhqQtynJUuHBQz3OW_7ib8mUtd9SRBxL_HMPK362Kl-B5lT0Go_9XllvrLfAGoGe9hQw
+}

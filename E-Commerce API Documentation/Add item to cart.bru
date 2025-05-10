@@ -1,0 +1,11 @@
+meta {
+  name: Add item to cart
+  type: http
+  seq: 5
+}
+
+patch {
+  url: http://localhost:8000/ecommerce/api/carts
+  body: none
+  auth: inherit
+}

@@ -75,14 +75,4 @@ const OrderItem = sequelize.define<OrderItemsModelInterface>(
   }
 );
 
-OrderItem.belongsTo(Order, {
-  foreignKey: "orderId",
-  as: "order",
-});
-
-OrderItem.belongsTo(Product, {
-  foreignKey: "productId",
-  as: "product",
-});
-
 export default OrderItem;

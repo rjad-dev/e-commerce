@@ -36,8 +36,6 @@ export const port = mustExist(+process.env.PORT! as number, "PORT"),
   jwtClientId = mustExist(process.env.JWT_CLIENT_ID!, "JWT_CLENT_ID"),
   jwtClientSecret =  mustExist(process.env.JWT_CLIENT_SECRET!, "JWT_CLIENT_SECRET"),
   accessTokenExpiresIn = '7d',
-  /** Order */
-  defaultOrder = "id",
-  defaultSort = SortEnum.DESC
+  cartItemExpiryDate = 30
 
 export * from './databaseInstance'

@@ -1,6 +1,8 @@
 import { Database } from "../config";
 import { DataTypes } from "sequelize";
 import { UserModelInterface } from "../interfaces";
+import Cart from "./carts";
+import Order from "./orders";
 
 const sequelize = Database.sequelize;
 
@@ -72,5 +74,20 @@ const User = sequelize.define<UserModelInterface>(
     ],
   }
 );
+
+User.hasOne(Cart, {
+  foreignKey: 'userId',
+  as: 'cart'
+});
+
+Cart.belongsTo(User, {
+  foreignKey: 'userId',
+  as: 'user'
+});
+
+User.hasMany(Order, {
+  foreignKey: 'userId',
+  as: 'orders'
+});
 
 export default User;

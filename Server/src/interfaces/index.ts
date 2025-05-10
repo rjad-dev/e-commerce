@@ -5,3 +5,5 @@ export * from "./orderItemInterface";
 export * from "./paymentInterface";
 export * from "./productInterface";
 export * from "./userInterface";
+export * from "./cartInterface";
+export * from "./cartItemsInterface"

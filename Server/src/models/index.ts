@@ -1,3 +1,5 @@
+import CartItem from "./cartItems"
+import Cart from "./carts"
 import OrderItem from "./orderItems"
 import Order from "./orders"
 import Payment from "./payments"
@@ -9,7 +11,9 @@ const Model = {
     Product,
     Order,
     OrderItem,
-    Payment
+    Payment,
+    Cart,
+    CartItem
 }
 
 export default Model
