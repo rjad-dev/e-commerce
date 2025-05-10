@@ -5,6 +5,7 @@ import {
   IncludeOptions,
   Order,
 } from "sequelize/types/model";
+import { SortEnum } from "../enums";
 
 interface RepositoryWriter<IT, RT> {
   create(input: Partial<IT>, include?: IncludeOptions): Promise<RT>;
