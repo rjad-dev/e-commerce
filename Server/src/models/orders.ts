@@ -1,16 +1,13 @@
 import { Database } from "../config";
 import { DataTypes } from "sequelize";
+import * as Sequelize from "sequelize";
 import User from "./users";
+import { OrderStatusEnum } from "../enums";
+import { OrderModelInterface } from "../interfaces";
 
 const sequelize = Database.sequelize;
 
-enum OrderStatus {
-  PENDING = 'PENDING',
-  COMPLETED = 'COMPLETED',
-  CANCELLED = 'CANCELLED'
-}
-
-const Order = sequelize.define<any>(
+const Order = sequelize.define<OrderModelInterface>(
   "orders",
   {
     id: {
@@ -22,36 +19,40 @@ const Order = sequelize.define<any>(
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      field: 'user_id',
+      field: "user_id",
       references: {
-        model: 'users',
-        key: 'id'
-      }
+        model: "users",
+        key: "id",
+      },
     },
     totalAmount: {
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
-      field: 'total_amount'
+      field: "total_amount",
     },
     status: {
-      type: DataTypes.ENUM('PENDING', 'COMPLETED', 'CANCELLED'),
+      type: Sequelize.ENUM(
+        OrderStatusEnum.PENDING,
+        OrderStatusEnum.CANCELLED,
+        OrderStatusEnum.COMPLETED
+      ),
       allowNull: false,
-      defaultValue: 'PENDING',
+      defaultValue: OrderStatusEnum.PENDING,
     },
     createdAt: {
       type: DataTypes.DATE,
       allowNull: false,
-      field: 'created_at'
+      field: "created_at",
     },
     updatedAt: {
       type: DataTypes.DATE,
       allowNull: false,
-      field: 'updated_at'
+      field: "updated_at",
     },
     deletedAt: {
       type: DataTypes.DATE,
       allowNull: true,
-      field: 'deleted_at'
+      field: "deleted_at",
     },
   },
   {
@@ -60,8 +61,8 @@ const Order = sequelize.define<any>(
     underscored: false,
     indexes: [
       {
-        name: 'orders_user_id',
-        fields: ['user_id'],
+        name: "orders_user_id",
+        fields: ["user_id"],
         where: {
           deletedAt: null,
         },
@@ -71,8 +72,8 @@ const Order = sequelize.define<any>(
 );
 
 Order.belongsTo(User, {
-  foreignKey: 'userId',
-  as: 'user'
+  foreignKey: "userId",
+  as: "user",
 });
 
 export default Order;

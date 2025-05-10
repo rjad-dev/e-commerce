@@ -1,11 +1,30 @@
-import { WhereOptions } from 'sequelize';
-import { Attributes, GroupOption, IncludeOptions, Order } from 'sequelize/types/model';
+import { WhereOptions } from "sequelize";
+import {
+  Attributes,
+  GroupOption,
+  IncludeOptions,
+  Order,
+} from "sequelize/types/model";
 
 interface RepositoryWriter<IT, RT> {
   create(input: Partial<IT>, include?: IncludeOptions): Promise<RT>;
   bulkCreate(input: Partial<IT[]>): Promise<RT[]>;
-  updateOne({ id, input, include }: { id: number; input: Partial<IT>; include: IncludeOptions[] }): Promise<[number]>;
-  update({ where, input }: { where: object; input: Partial<IT> }): Promise<[number]>;
+  updateOne({
+    id,
+    input,
+    include,
+  }: {
+    id: number;
+    input: Partial<IT>;
+    include: IncludeOptions[];
+  }): Promise<[number]>;
+  update({
+    where,
+    input,
+  }: {
+    where: object;
+    input: Partial<IT>;
+  }): Promise<[number]>;
   deleteOne(id: number): Promise<number>;
   deleteMany({ where }: { where: object }): Promise<number>;
   restore(id: number): Promise<number>;
@@ -19,7 +38,7 @@ interface RepositoryReader<RT> {
     order,
     distinct,
     logging,
-    offset
+    offset,
   }: {
     where?: WhereOptions<any>;
     attributes?: Attributes<any>;
@@ -45,7 +64,7 @@ interface RepositoryReader<RT> {
     options?: {
       attributes?: Attributes<any>;
       include?: IncludeOptions[];
-    },
+    }
   ): Promise<RT>;
   findAndCountAll({
     where,
@@ -67,8 +86,10 @@ interface RepositoryReader<RT> {
   count({ where }: { where?: WhereOptions<any> }): Promise<number>;
 }
 
-export abstract class BaseRepository<IT, RT> implements RepositoryWriter<IT, RT>, RepositoryReader<RT> {
-  constructor(public readonly model: any) { }
+export abstract class BaseRepository<IT, RT>
+  implements RepositoryWriter<IT, RT>, RepositoryReader<RT>
+{
+  constructor(public readonly model: any) {}
 
   findAll({
     where,
@@ -79,7 +100,7 @@ export abstract class BaseRepository<IT, RT> implements RepositoryWriter<IT, RT>
     limit,
     distinct,
     logging,
-    offset
+    offset,
   }: {
     where?: WhereOptions<any>;
     attributes?: Attributes<any>;
@@ -91,7 +112,17 @@ export abstract class BaseRepository<IT, RT> implements RepositoryWriter<IT, RT>
     logging?: boolean;
     offset?: number;
   }): Promise<RT[]> {
-    return this.model.findAll({ where, attributes, include, order, group, limit, logging, distinct, offset });
+    return this.model.findAll({
+      where,
+      attributes,
+      include,
+      order,
+      group,
+      limit,
+      logging,
+      distinct,
+      offset,
+    });
   }
 
   findOne({
@@ -113,7 +144,7 @@ export abstract class BaseRepository<IT, RT> implements RepositoryWriter<IT, RT>
     options?: {
       attributes?: Attributes<any>;
       include?: IncludeOptions[];
-    },
+    }
   ): Promise<RT> {
     return this.model.findByPk(id, options);
   }
@@ -145,11 +176,19 @@ export abstract class BaseRepository<IT, RT> implements RepositoryWriter<IT, RT>
       offset,
       limit,
       distinct,
-      logging
+      logging,
     });
   }
 
-  count({ where, include, distinct }: { where?: WhereOptions<any>, include?: any, distinct?: boolean }): Promise<number> {
+  count({
+    where,
+    include,
+    distinct,
+  }: {
+    where?: WhereOptions<any>;
+    include?: any;
+    distinct?: boolean;
+  }): Promise<number> {
     return this.model.count({ where, include, distinct: distinct ?? true });
   }
 
@@ -161,16 +200,28 @@ export abstract class BaseRepository<IT, RT> implements RepositoryWriter<IT, RT>
     return this.model.bulkCreate(input, { ignoreDuplicates: true });
   }
 
-  updateOne({ id, input }: { id: number; input: Partial<IT> }): Promise<[number]> {
+  updateOne({
+    id,
+    input,
+  }: {
+    id: number;
+    input: Partial<IT>;
+  }): Promise<[number]> {
     return this.model.update(input, { where: { id } });
   }
 
-  update({ where, input }: { where: WhereOptions<any>; input: Partial<IT> }): Promise<[number]> {
+  update({
+    where,
+    input,
+  }: {
+    where: WhereOptions<any>;
+    input: Partial<IT>;
+  }): Promise<[number]> {
     return this.model.update(input, { where });
   }
 
-  deleteOne(id: number): Promise<number> {  
-      return this.model.destroy({
+  deleteOne(id: number): Promise<number> {
+    return this.model.destroy({
       where: { id },
     });
   }

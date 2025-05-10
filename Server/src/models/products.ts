@@ -1,9 +1,10 @@
 import { Database } from "../config";
 import { DataTypes } from "sequelize";
+import { ProductModelInterface } from "../interfaces";
 
 const sequelize = Database.sequelize;
 
-const Product = sequelize.define<any>(
+const Product = sequelize.define<ProductModelInterface>(
   "products",
   {
     id: {

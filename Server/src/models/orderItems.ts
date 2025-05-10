@@ -2,10 +2,11 @@ import { Database } from "../config";
 import { DataTypes } from "sequelize";
 import Order from "./orders";
 import Product from "./products";
+import { OrderItemsModelInterface } from "../interfaces";
 
 const sequelize = Database.sequelize;
 
-const OrderItem = sequelize.define<any>(
+const OrderItem = sequelize.define<OrderItemsModelInterface>(
   "order_items",
   {
     id: {
@@ -17,20 +18,20 @@ const OrderItem = sequelize.define<any>(
     orderId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      field: 'order_id',
+      field: "order_id",
       references: {
-        model: 'orders',
-        key: 'id'
-      }
+        model: "orders",
+        key: "id",
+      },
     },
     productId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      field: 'product_id',
+      field: "product_id",
       references: {
-        model: 'products',
-        key: 'id'
-      }
+        model: "products",
+        key: "id",
+      },
     },
     quantity: {
       type: DataTypes.INTEGER,
@@ -39,22 +40,22 @@ const OrderItem = sequelize.define<any>(
     priceAtPurchase: {
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
-      field: 'price_at_purchase'
+      field: "price_at_purchase",
     },
     createdAt: {
       type: DataTypes.DATE,
       allowNull: false,
-      field: 'created_at'
+      field: "created_at",
     },
     updatedAt: {
       type: DataTypes.DATE,
       allowNull: false,
-      field: 'updated_at'
+      field: "updated_at",
     },
     deletedAt: {
       type: DataTypes.DATE,
       allowNull: true,
-      field: 'deleted_at'
+      field: "deleted_at",
     },
   },
   {
@@ -63,25 +64,25 @@ const OrderItem = sequelize.define<any>(
     underscored: false,
     indexes: [
       {
-        name: 'order_items_order_id',
-        fields: ['order_id'],
+        name: "order_items_order_id",
+        fields: ["order_id"],
       },
       {
-        name: 'order_items_product_id',
-        fields: ['product_id'],
+        name: "order_items_product_id",
+        fields: ["product_id"],
       },
     ],
   }
 );
 
 OrderItem.belongsTo(Order, {
-  foreignKey: 'orderId',
-  as: 'order'
+  foreignKey: "orderId",
+  as: "order",
 });
 
 OrderItem.belongsTo(Product, {
-  foreignKey: 'productId',
-  as: 'product'
+  foreignKey: "productId",
+  as: "product",
 });
 
 export default OrderItem;

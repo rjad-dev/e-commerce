@@ -1,17 +1,13 @@
 import { Database } from "../config";
 import { DataTypes } from "sequelize";
-import * as Sequelize from "sequelize"
+import * as Sequelize from "sequelize";
 import Order from "./orders";
+import { PaymentStatusEnum } from "../enums";
+import { PaymentsModelInterface } from "../interfaces";
 
 const sequelize = Database.sequelize;
 
-enum PaymentStatus {
-  PENDING = 'PENDING',
-  SUCCEEDED = 'SUCCEEDED',
-  FAILED = 'FAILED'
-}
-
-const Payment = sequelize.define<any>(
+const Payment = sequelize.define<PaymentsModelInterface>(
   "payments",
   {
     id: {
@@ -23,13 +19,11 @@ const Payment = sequelize.define<any>(
     orderId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      field: 'order_id',
+      field: "order_id",
       references: {
-        model: 'orders',
-        key: 'id'
+        model: "orders",
+        key: "id",
       },
-      onUpdate: 'CASCADE',
-      onDelete: 'CASCADE',
     },
     amount: {
       type: DataTypes.DECIMAL(10, 2),
@@ -38,32 +32,36 @@ const Payment = sequelize.define<any>(
     paymentMethod: {
       type: DataTypes.STRING(50),
       allowNull: false,
-      field: 'payment_method'
+      field: "payment_method",
     },
     transactionId: {
       type: DataTypes.STRING(100),
       allowNull: true,
-      field: 'transaction_id'
+      field: "transaction_id",
     },
     status: {
-      type: DataTypes.ENUM('PENDING', 'SUCCEEDED', 'FAILED'),
+      type: Sequelize.ENUM(
+        PaymentStatusEnum.SUCCEEDED,
+        PaymentStatusEnum.PENDING,
+        PaymentStatusEnum.FAILED
+      ),
       allowNull: false,
-      defaultValue: 'PENDING',
+      defaultValue: PaymentStatusEnum.PENDING,
     },
     createdAt: {
       type: DataTypes.DATE,
       allowNull: false,
-      field: 'created_at'
+      field: "created_at",
     },
     updatedAt: {
       type: DataTypes.DATE,
       allowNull: true,
-      field: 'updated_at'
+      field: "updated_at",
     },
     deletedAt: {
       type: DataTypes.DATE,
       allowNull: true,
-      field: 'deleted_at'
+      field: "deleted_at",
     },
   },
   {
@@ -72,13 +70,13 @@ const Payment = sequelize.define<any>(
     underscored: false,
     indexes: [
       {
-        name: 'payments_order_id',
-        fields: ['order_id'],
+        name: "payments_order_id",
+        fields: ["order_id"],
         unique: true,
       },
       {
-        name: 'payments_transaction_id',
-        fields: ['transaction_id'],
+        name: "payments_transaction_id",
+        fields: ["transaction_id"],
         unique: true,
         where: {
           transaction_id: {
@@ -91,8 +89,8 @@ const Payment = sequelize.define<any>(
 );
 
 Payment.belongsTo(Order, {
-  foreignKey: 'orderId',
-  as: 'order'
+  foreignKey: "orderId",
+  as: "order",
 });
 
 export default Payment;
