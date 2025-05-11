@@ -75,4 +75,14 @@ const OrderItem = sequelize.define<OrderItemsModelInterface>(
   }
 );
 
+Product.hasMany(OrderItem, {
+  foreignKey: 'productId',
+  as: 'orderItems'
+});
+
+OrderItem.belongsTo(Product, {
+  foreignKey: 'productId',
+  as: 'product'
+});
+
 export default OrderItem;

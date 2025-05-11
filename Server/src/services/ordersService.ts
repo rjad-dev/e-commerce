@@ -1,5 +1,6 @@
 import { OrderStatusEnum } from "../enums";
 import { OrderInterface } from "../interfaces";
+import Model from "../models";
 import {
   CartItemRepository,
   OrderItemRepository,
@@ -23,17 +24,17 @@ export class OrdersService {
 
   async create({
     userId,
-    cartItemsIds,
+    cartItemIds,
   }: {
     userId: number;
-    cartItemsIds: number[];
+    cartItemIds: number[];
   }): Promise<OrderInterface> {
     try {
       const cartItems = await this.cartItemRepository.findAll({
-        where: { id: { [Op.in]: cartItemsIds } },
+        where: { id: { [Op.in]: cartItemIds } },
       });
 
-      if (cartItems.length !== cartItemsIds.length) {
+      if (cartItems.length !== cartItemIds.length) {
         throw new Error("One or more cart items not found");
       }
 
@@ -100,7 +101,7 @@ export class OrdersService {
       await this.orderItemRepository.bulkCreate(orderItems);
 
       await this.cartItemRepository.deleteMany({
-        where: { id: { [Op.in]: cartItemsIds } },
+        where: { id: { [Op.in]: cartItemIds } },
       });
 
       return order;
@@ -114,7 +115,19 @@ export class OrdersService {
     return this.repository.findAll({
       where: {
         userId: userId
-      }
+      },
+      include: [
+        {
+          model: Model.OrderItem,
+          as: 'orderItems',
+          include: [
+            {
+              model: Model.Product,
+              as: 'product'
+            }
+          ]
+        }
+      ]
     })
   }
 

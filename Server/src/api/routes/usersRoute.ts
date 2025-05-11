@@ -8,6 +8,6 @@ export class UsersRoute extends RouterClass {
   }
 
   define(): void {
-    this.router.route("/login").get(exceptionHandler(UsersController.login));
+    this.router.route("/login").post(exceptionHandler(UsersController.login));
   }
 }

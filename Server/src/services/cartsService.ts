@@ -1,5 +1,6 @@
 import { cartItemExpiryDate } from "../config";
 import { CartInterface, CartItemInterface } from "../interfaces";
+import Model from "../models";
 import { CartItemRepository, CartRepository } from "../repositories";
 
 export class CartsService {
@@ -33,6 +34,12 @@ export class CartsService {
       where: {
         cartId: cartId,
       },
+      include: [
+        {
+          model: Model.Product,
+          as: "product"
+        }
+      ]
     });
   }
 

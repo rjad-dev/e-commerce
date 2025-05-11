@@ -3,6 +3,7 @@ import { createServer } from "http";
 import morgan from "morgan";
 import { baseUrl, Database, port } from "./config";
 import { ProxyRouter } from "./api/routes";
+import cors from "cors";
 
 class Server {
   private app: express.Application;
@@ -15,6 +16,15 @@ class Server {
   }
 
   private configuration() {
+    this.app.use(
+      cors({
+        origin: "http://localhost:5173", 
+        methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+        allowedHeaders: ["Content-Type", "Authorization"],
+        credentials: true,
+      })
+    );
+
     this.app.use(express.json());
     this.app.use(morgan("dev"));
     this.app.use("/ecommerce/api/", ProxyRouter.map());

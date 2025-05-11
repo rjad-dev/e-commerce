@@ -5,6 +5,7 @@ import User from "./users";
 import { OrderStatusEnum } from "../enums";
 import { OrderModelInterface } from "../interfaces";
 import OrderItem from "./orderItems";
+import Product from "./products";
 
 const sequelize = Database.sequelize;
 

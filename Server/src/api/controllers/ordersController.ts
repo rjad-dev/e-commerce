@@ -12,15 +12,16 @@ export class OrdersController {
         await Authenticate.verifyAccessToken(req.headers.authorization)
       ).data as UserInterface;
 
-      const { cartItemsIds } = req.body;
+      const { cartItemIds } = req.body;
+      console.log(req.body)
       const order = await new OrdersService().create({
         userId: user.id,
-        cartItemsIds: cartItemsIds,
+        cartItemIds: cartItemIds,
       });
 
       return res.status(200).json({
         message: "Order created successfully.",
-        order,
+        data: order,
       });
     } catch (error: any) {
       return res.status(500).json({
@@ -39,7 +40,7 @@ export class OrdersController {
 
       return res.status(200).json({
         message: "Orders fetched successfully.",
-        orders,
+        data: orders,
       });
     } catch (error: any) {
       return res.status(500).json({
@@ -61,7 +62,7 @@ export class OrdersController {
 
       return res.status(200).json({
         message: "Checkout successfull.",
-        order,
+        data: order,
       });
     } catch (error: any) {
       return res.status(500).json({

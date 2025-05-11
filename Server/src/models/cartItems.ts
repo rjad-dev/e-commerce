@@ -82,4 +82,19 @@ Cart.hasMany(CartItem, {
   as: 'cartItems'
 });
 
+Product.hasMany(CartItem, {
+  foreignKey: 'productId',
+  as: 'cartItems'
+});
+
+CartItem.belongsTo(Cart, {
+  foreignKey: 'cartId',
+  as: 'cart'
+});
+
+CartItem.belongsTo(Product, {
+  foreignKey: 'productId',
+  as: 'product'
+});
+
 export default CartItem;

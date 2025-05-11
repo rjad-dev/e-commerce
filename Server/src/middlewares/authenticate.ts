@@ -28,7 +28,8 @@ class Authenticate {
 
   public async verifyAccessToken(token: string) {
     try {
-      const decoded = jwt.verify(token, jwtClientSecret);
+      const tokenWithoutBearer = token.replace(/^Bearer\s+/i, '');
+      const decoded = jwt.verify(tokenWithoutBearer, jwtClientSecret);
       return { success: true, data: decoded };
     } catch (error) {
       throw new Error(error)

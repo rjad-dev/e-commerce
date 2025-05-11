@@ -3,6 +3,7 @@ import { DataTypes } from "sequelize";
 import { ProductModelInterface } from "../interfaces";
 import CartItem from "./cartItems";
 import OrderItem from "./orderItems";
+import Order from "./orders";
 
 const sequelize = Database.sequelize;
 
@@ -69,15 +70,5 @@ const Product = sequelize.define<ProductModelInterface>(
     ],
   }
 );
-
-Product.hasMany(CartItem, {
-  foreignKey: 'productId',
-  as: 'cartItems'
-});
-
-Product.hasMany(OrderItem, {
-  foreignKey: 'productId',
-  as: 'orderItems'
-});
 
 export default Product;

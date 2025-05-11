@@ -19,7 +19,10 @@ export class UsersController {
 
       return res.status(200).json({
         message: "Login successfull.",
-        data: accessToken,
+        data: {
+          accessToken: accessToken,
+          user: userExists
+        },
       });
     } catch (error: any) {
       return res.status(500).json({
