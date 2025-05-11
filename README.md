@@ -55,7 +55,7 @@ Follow these steps to get the backend server up and running:
     ```bash
     npm run start:watch
     ```
-    This command will start the backend server and automatically restart it when code changes are detected (thanks to the build watch).
+    This command will start the backend server and automatically restart it when code changes are detected.
 
     Your backend server should now be running.
 
@@ -92,4 +92,3 @@ You should now have both the backend and frontend running and be able to access 
 
 * Make sure your database server is running before you attempt to run migrations and seeds.
 * Check the `config/config.json` file (or the relevant environment-specific configuration file) in the `Server` directory to ensure your database connection details are correct.
-* For production deployment, different build and start commands might be necessary. Refer to the specific scripts in `package.json` for each part of the application.
